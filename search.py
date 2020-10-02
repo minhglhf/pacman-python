@@ -90,6 +90,7 @@ def depthFirstSearch(problem):
 
     from util import Stack
      
+
     startState = (problem.getStartState(),[])
     
     if problem.isGoalState(startState):
@@ -142,7 +143,27 @@ def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
 
+    from util import PriorityQueue
+
+    startState = problem.getStartState()
     
+    if problem.isGoalState(startState):
+        return []
+    else: 
+        queueUCS = PriorityQueue()
+        visited = [] 
+        path = []
+        queueUCS.push((startState, [], 0), 0)
+        while not queueUCS.isEmpty():              
+            pos, path, costs = queueUCS.pop() 
+            if not pos in visited:
+                visited.append(pos) 
+                if problem.isGoalState(pos):
+                    return path
+                for state, action, cost in problem.getSuccessors(pos):
+                    if not state in visited:
+                        queueUCS.push((state, path + [action], costs + cost), costs + cost)
+    return [] 
 
     util.raiseNotDefined()
 
