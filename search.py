@@ -89,22 +89,7 @@ def depthFirstSearch(problem):
     "*** YOUR CODE HERE ***"
 
     from util import Stack
-    # start_state = (problem.getStartState(), [])
-    # visited = set()
-    # myStack = Stack()
-    # myStack.push(start_state)
-    # visited.add(start_state[0])
-    # while not myStack.isEmpty():
-    #     top = myStack.pop()
-    #     visited.add(top[0])
-    #     if problem.isGoalState(top[0]):
-    #         return top[1]
-    #     successors = problem.getSuccessors(top[0])
-    #     for p in successors:
-    #         if p[0] not in visited:
-    #             myStack.push((p[0], top[1]+[p[1]]))
-    # return None   
-
+     
     startState = (problem.getStartState(),[])
     
     if problem.isGoalState(startState):
@@ -130,7 +115,26 @@ def breadthFirstSearch(problem):
     """Search the shallowest nodes in the search tree first."""
     "*** YOUR CODE HERE ***"
 
-         
+    from util import Queue
+
+    startState = (problem.getStartState(),[])
+    
+    if problem.isGoalState(startState):
+        return []
+    else: 
+        queueBFS = Queue()
+        visited = [] 
+        path = []
+        queueBFS.push(startState)
+        while not queueBFS.isEmpty():              
+            pos,path = queueBFS.pop() 
+            visited.append(pos)
+            if problem.isGoalState(pos):
+                return path
+            for p in problem.getSuccessors(pos):
+                if p[0] not in visited and p[0] not in (state[0] for state in queueBFS.list):
+                    queueBFS.push((p[0],path + [p[1]]))
+    return []         
 
     util.raiseNotDefined()
 
@@ -138,7 +142,7 @@ def uniformCostSearch(problem):
     """Search the node of least total cost first."""
     "*** YOUR CODE HERE ***"
 
-
+    
 
     util.raiseNotDefined()
 
