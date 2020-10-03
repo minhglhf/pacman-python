@@ -289,12 +289,16 @@ class CornersProblem(search.SearchProblem):
         # in initializing the problem
         "*** YOUR CODE HERE ***"
 
+
     def getStartState(self):
         """
         Returns the start state (in your state space, not the full Pacman state
         space)
         """
         "*** YOUR CODE HERE ***"
+        visitedCorners = (False, False, False, False)
+        return (self.startingPosition, visitedCorners)
+
         util.raiseNotDefined()
 
     def isGoalState(self, state):
@@ -302,6 +306,9 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
+
+        return not False in state[1]
+
         util.raiseNotDefined()
 
     def getSuccessors(self, state):
@@ -326,6 +333,18 @@ class CornersProblem(search.SearchProblem):
 
             "*** YOUR CODE HERE ***"
 
+            x, y = state[0]
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x+dx), int(y+dy)
+            if not self.walls[nextx][nexty]:
+                nextPos = (nextx, nexty)
+                visitedCorners = state[1]
+                if nextPos in self.corners:
+                    temp = list(visitedCorners)
+                    temp[self.corners.index(nextPos)] = True
+                    visitedCorners = tuple(temp)
+                next_state = (nextPos, visitedCorners)
+                successors.append((next_state, action,1))
         self._expanded += 1 # DO NOT CHANGE
         return successors
 
@@ -360,6 +379,19 @@ def cornersHeuristic(state, problem):
     walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
 
     "*** YOUR CODE HERE ***"
+
+    import math
+    h = 0
+    visitedCorners = state[1]
+    if problem.isGoalState(state):
+        return 0
+    for x in range(4):
+        if not visitedCorners[x]:
+            xh, yh = state[0]
+            xc, yc = corners[x]
+            h  = max(h,(abs(xh-xc)+abs(yh-yc)))
+    return h
+    
     return 0 # Default to trivial solution
 
 class AStarCornersAgent(SearchAgent):
