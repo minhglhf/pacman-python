@@ -296,8 +296,7 @@ class CornersProblem(search.SearchProblem):
         space)
         """
         "*** YOUR CODE HERE ***"
-        visitedCorners = (False, False, False, False)
-        return (self.startingPosition, visitedCorners)
+        
         util.raiseNotDefined()
 
     def isGoalState(self, state):
@@ -305,7 +304,7 @@ class CornersProblem(search.SearchProblem):
         Returns whether this search state is a goal state of the problem.
         """
         "*** YOUR CODE HERE ***"
-        return not False in state[1]
+       
         util.raiseNotDefined()
 
     def getSuccessors(self, state):
@@ -329,20 +328,7 @@ class CornersProblem(search.SearchProblem):
             #   hitsWall = self.walls[nextx][nexty]
 
             "*** YOUR CODE HERE ***"
-            x, y = state[0]
-            dx, dy = Actions.directionToVector(action)
-            nextx, nexty = int(x+dx), int(y+dy)
            
-            if not self.walls[nextx][nexty]:
-                nextPos = (nextx, nexty)
-                visitedCorners = state[1]
-                if nextPos in self.corners:
-                    temp = list(visitedCorners)
-                    temp[self.corners.index(nextPos)] = True
-                    visitedCorners = tuple(temp)
-                next_state = (nextPos, visitedCorners)
-                successors.append((next_state, action,1))
-
         self._expanded += 1 # DO NOT CHANGE
         return successors
     def getCostOfActions(self, actions):
@@ -377,17 +363,7 @@ def cornersHeuristic(state, problem):
 
     "*** YOUR CODE HERE ***"
 
-    import math
-    h = 0
-    visitedCorners = state[1]
-    if problem.isGoalState(state):
-        return 0
-    for x in range(4):
-        if not visitedCorners[x]:
-            xh, yh = state[0]
-            xc, yc = corners[x]
-            h  = max(h,(abs(xh-xc)+abs(yh-yc)))
-    return h
+   
     
     return 0 # Default to trivial solution
 
@@ -483,11 +459,7 @@ def foodHeuristic(state, problem):
     """
     "*** YOUR CODE HERE ***"
 
-    position, foodGrid = state
-    hMax = 0
-    for pos in foodGrid.asList():
-        hMax = max(hMax, mazeDistance(pos, position, problem.startingGameState))
-    return hMax
+   
     
 
 class ClosestDotSearchAgent(SearchAgent):
@@ -520,7 +492,7 @@ class ClosestDotSearchAgent(SearchAgent):
 
         "*** YOUR CODE HERE ***"
 
-        return search.bfs(problem)
+        
         util.raiseNotDefined()
 
 class AnyFoodSearchProblem(PositionSearchProblem):
@@ -558,13 +530,7 @@ class AnyFoodSearchProblem(PositionSearchProblem):
 
         "*** YOUR CODE HERE ***"
 
-        foodList = self.food.asList()
-        # distance, food = min([(util.manhattanDistance(state, food), food) for food in foodList])
-
-        # isGoal = state == food
-
-        # For display purposes only
-        return state in foodList
+    
 
         util.raiseNotDefined()
 
