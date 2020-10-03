@@ -119,23 +119,20 @@ def breadthFirstSearch(problem):
     from util import Queue
 
     startState = (problem.getStartState(),[])
-    
-    if problem.isGoalState(startState):
-        return []
-    else: 
-        queueBFS = Queue()
-        visited = [] 
-        path = []
-        queueBFS.push(startState)
-        while not queueBFS.isEmpty():              
-            pos,path = queueBFS.pop() 
-            visited.append(pos)
-            if problem.isGoalState(pos):
-                return path
-            for p in problem.getSuccessors(pos):
-                if p[0] not in visited and p[0] not in (state[0] for state in queueBFS.list):
-                    queueBFS.push((p[0],path + [p[1]]))
-    return []         
+     
+    queueBFS = Queue()
+    visited = [] 
+    path = []
+    queueBFS.push(startState)
+    while not queueBFS.isEmpty():              
+        pos,path = queueBFS.pop() 
+        visited.append(pos)
+        if problem.isGoalState(pos):
+            return path
+        for p in problem.getSuccessors(pos):
+            if p[0] not in visited and p[0] not in (state[0] for state in queueBFS.list):
+                queueBFS.push((p[0],path + [p[1]]))
+    return []     
 
     util.raiseNotDefined()
 
